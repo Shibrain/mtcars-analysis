@@ -30,11 +30,9 @@ First we take a look at variables correlation with MPG column
 sort( abs( cor(mtcars)[,c("mpg")]),decreasing=T)
 ```
 
-
 ## Exploratory Analysis
 
 Exploratory Analysis had been done and showed relations between variables Check the appendix
-
 
 ## Model selection
 
@@ -42,7 +40,6 @@ Attempt to fit a model with the most correlated variables
 
 ```{r}
 carsfit <- lm(mpg ~ tm+as.factor(cyl)+wt+disp+hp-1, data = mcars)
-summary(carsfit)
 ```
 
 Now We Exclude Number of Cylenders and dispalcement variables because they are not statistically segnificant.
@@ -52,7 +49,6 @@ and fit a model with significant values.
 
 ```{r}
 carsfit <- lm(mpg ~ tm+wt+hp-1+tm*wt*hp, data = mcars)
-summary(carsfit)
 ```
 
 But that didn't worked, it has many many insignificant values.
@@ -76,6 +72,11 @@ From the model we can say that manual transmission cars are little bit better fo
 #### Model Uncertainty
 
 The model used is very statistically significant one, with 0.9853 Adjusted R-squared. the data given is too small data and that is why we couldn't build a model with more details and variables.
+
+
+
+
+
 
 
 ## Appendix
