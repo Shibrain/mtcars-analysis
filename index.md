@@ -126,6 +126,7 @@ The model used is very statistically significant one, with 0.9853 Adjusted R-squ
 
 
 ```r
+
 qplot(y = mpg, x = wt, data = mcars, colour = disp, size = hp, facets = . ~ 
     tm, geom = c("point"), ylab = "MPG", xlab = "Weight (lb/1000)", main = "MPG with displacement, wieght, and Gross horsepower")
 ```
@@ -169,8 +170,14 @@ qplot(y = mpg, x = hp, data = mcars, color = tm, geom = c("point", "smooth"),
 
 
 ```r
-plot(carsfit)
+qplot(y = resid(carsfit), x = carsfit$fitted.values, data = mcars, color = tm, 
+    xlab = "Fitted Values", ylab = "Residuals", main = "Residuals plot") + geom_abline(slope = 0, 
+    intercept = 0) + geom_smooth()
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-71.png) ![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-72.png) ![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-73.png) ![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-74.png) 
+```
+## geom_smooth: method="auto" and size of largest group is <1000, so using loess. Use 'method = x' to change the smoothing method.
+```
+
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7.png) 
 
