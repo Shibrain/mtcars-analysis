@@ -1,0 +1,101 @@
+Effict of Transmission Type on MPG
+====
+
+## Introduction
+
+In this report aim to explore the relationship between set of variables and miles per gallon (MPG) (outcome).
+
+#### Data Processing
+
+Some data has to be prepared
+```{r}
+library(ggplot2)
+data(mtcars)
+
+mcars <- mtcars
+mcars[mcars$am ==0,c("tm")] <- gsub("0", "automatic", mcars[mcars$am ==0,c("am")])
+mcars[mcars$am ==1,c("tm")] <- gsub("1", "manual", mcars[mcars$am ==1,c("am")])
+mcars$tm <- as.factor(mcars$tm)
+
+auto <- subset(mcars, am == 0)
+manual <- subset(mcars, am ==  1)
+```
+
+
+#### variables correlation 
+
+First we take a look at variables correlation with MPG column
+
+```{r}
+sort( abs( cor(mtcars)[,c("mpg")]),decreasing=T)
+```
+
+
+## Exploratory Analysis
+
+Exploratory Analysis had been done and showed relations between variables Check the appendix
+
+
+## Model selection
+
+Attempt to fit a model with the most correlated variables
+
+```{r}
+carsfit <- lm(mpg ~ tm+as.factor(cyl)+wt+disp+hp-1, data = mcars)
+summary(carsfit)
+```
+
+Now We Exclude Number of Cylenders and dispalcement variables because they are not statistically segnificant.
+
+and fit a model with significant values.
+
+
+```{r}
+carsfit <- lm(mpg ~ tm+wt+hp-1+tm*wt*hp, data = mcars)
+summary(carsfit)
+```
+
+But that didn't worked, it has many many insignificant values.
+
+So, let's try it with less details.
+
+```{r}
+carsfit <- lm(mpg ~ tm+wt+hp-1, data = mcars)
+summary(carsfit)
+```
+
+Now we got a sutable model.
+
+
+## Conclusion
+
+#### The Answer
+
+From the model we can say that manual transmission cars are little bit better for MPG by an average of  **`r summary(carsfit)$coef[c("tmmanual"),1] - summary(carsfit)$coef[c("tmautomatic"),1]`** miled per US galon.
+
+#### Model Uncertainty
+
+The model used is very statistically significant one, with 0.9853 Adjusted R-squared. the data given is too small data and that is why we couldn't build a model with more details and variables.
+
+
+## Appendix
+
+### Exploratory analysis Plots 
+
+```{r}
+qplot(y=mpg, x=wt, data=mcars, colour= disp,size=hp,facets=.~tm,geom =c("point"),ylab = "MPG",xlab="Weight (lb/1000)",main="MPG with displacement, wieght, and Gross horsepower")
+
+qplot(y =mpg ,x= disp, data=mcars,facets=.~tm,geom =c("point", "smooth"), method = "lm",main="MPG with Displacement",ylab = "MPG",xlab="Displacement (cu.in.)")
+
+qplot(y =mpg ,x=as.factor(cyl), data=mcars,geom=c("boxplot", "jitter"),facets=.~tm,main="MPG with Number of cylinders",ylab = "MPG",xlab="Number of cylinders")
+
+qplot(y =mpg , x=wt, data=mcars,color=tm,geom =c("point", "smooth"), method = "lm",main="MPG with Weight",ylab = "MPG",xlab="Weight (lb/1000)")
+
+qplot(y =mpg , x=hp, data=mcars,color=tm,geom =c("point", "smooth"), method = "lm",main="MPG with Gross horsepower",ylab = "MPG",xlab="Gross horsepower")
+```
+
+### Rsiduals
+
+```{r}
+plot(carsfit)
+```
