@@ -135,19 +135,11 @@ qplot(y = mpg, x = wt, data = mcars, colour = disp, size = hp, facets = . ~
 
 ```r
 
-qplot(y = mpg, x = disp, data = mcars, facets = . ~ tm, geom = c("point", "smooth"), 
-    method = "lm", main = "MPG with Displacement", ylab = "MPG", xlab = "Displacement (cu.in.)")
-```
-
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-62.png) 
-
-```r
-
 qplot(y = mpg, x = as.factor(cyl), data = mcars, geom = c("boxplot", "jitter"), 
     facets = . ~ tm, main = "MPG with Number of cylinders", ylab = "MPG", xlab = "Number of cylinders")
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-63.png) 
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-62.png) 
 
 ```r
 
@@ -155,7 +147,7 @@ qplot(y = mpg, x = wt, data = mcars, color = tm, geom = c("point", "smooth"),
     method = "lm", main = "MPG with Weight", ylab = "MPG", xlab = "Weight (lb/1000)")
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-64.png) 
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-63.png) 
 
 ```r
 
@@ -163,7 +155,7 @@ qplot(y = mpg, x = hp, data = mcars, color = tm, geom = c("point", "smooth"),
     method = "lm", main = "MPG with Gross horsepower", ylab = "MPG", xlab = "Gross horsepower")
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-65.png) 
+![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-64.png) 
 
 
 ### Rsiduals
